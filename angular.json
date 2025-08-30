@@ -40,7 +40,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
