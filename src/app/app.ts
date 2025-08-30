@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {SvgIconComponent} from 'angular-svg-icon';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [SvgIconComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
