@@ -1,0 +1,18 @@
+.general-info {
+  border-radius: 15px;
+  background: white;
+  padding: 20px 30px;
+  min-height: 70dvh;
+}
+
+.general-info-title {
+  color: var(--green-700);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 22px;
+  text-transform: capitalize;
+}
+
+.general-info-graph {
+  margin-top: 20px;
+}
