@@ -17,9 +17,9 @@ export const MENU_ITEMS: MenuItem[] = [
     link: '/'
   },
   {
-    label: 'Lorem',
+    label: 'DashboardService',
     iconPath: 'expand-icon',
-    link: '/'
+    link: '/dashboard'
   },
   {
     label: 'Lorem',

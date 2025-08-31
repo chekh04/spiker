@@ -1,0 +1,79 @@
+<section class="info-panel">
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading dashboard data...</p>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-state">
+      <p class="error-message">{{ error() }}</p>
+      <button class="retry-btn" (click)="refresh()">Try Again</button>
+    </div>
+  }
+
+  @if (statisticInfo(); as info) {
+
+    <section class="info-panel-heading">
+      @if (info.description) {
+        <div class="info-panel-description">
+          <div class="info-panel-title">Description</div>
+          <p class="info-panel-description">{{info.description}}</p>
+        </div>
+
+      }
+
+      @if (info.extra) {
+        <div class="info-panel-description">
+          <div class="info-panel-title">Extra</div>
+          <p class="info-panel-description">{{info.extra}}</p>
+        </div>
+      }
+
+    </section>
+
+    <section class="info-panel-items">
+      <div class="info-panel-item">
+        <div class="info-panel-subtitle info-panel-item-title">Subscription type</div>
+        <div class="info-panel-item-value">{{info.subscriptionType}}</div>
+      </div>
+      <div class="info-panel-item">
+        <div class="info-panel-subtitle info-panel-item-title">Total users</div>
+        <div class="info-panel-item-value">{{info.subscriptionType}}</div>
+      </div>
+      <div class="info-panel-item">
+        <div class="info-panel-subtitle info-panel-item-title">Active Users</div>
+        <div class="info-panel-item-value">{{info.activeUsers}}</div>
+      </div>
+      <div class="info-panel-item">
+        <div class="info-panel-subtitle info-panel-item-title">Revenue</div>
+        <div class="info-panel-item-value">{{info.subscriptionType}}</div>
+      </div>
+      <div class="info-panel-item">
+        <div class="info-panel-subtitle info-panel-item-title">Conversation rate</div>
+        <div class="info-panel-item-value">{{info.conversionRate}}</div>
+      </div>
+      <div class="info-panel-item">
+        <div class="info-panel-subtitle info-panel-item-title">Last updated</div>
+        <div class="info-panel-item-value">{{info.lastUpdated | date:'MM/dd/yyyy'}}</div>
+      </div>
+      <div class="info-panel-item">
+        <div class="info-panel-subtitle info-panel-item-title">Period</div>
+        <div class="info-panel-item-value">{{info.period}}</div>
+      </div>
+    </section>
+
+    @if (info.hardwareInfo.length > 0) {
+      <section class="info-panel-hardwares">
+        <h3 class="info-panel-subtitle info-panel-hardwares-title">Hardwares info</h3>
+        <div class="hardware-grid">
+          @for (hardware of statisticInfo()!.hardwareInfo; track hardware.id) {
+            <app-hardware-card [hardwareInfo]="hardware" />
+          }
+        </div>
+      </section>
+    }
+  }
+</section>

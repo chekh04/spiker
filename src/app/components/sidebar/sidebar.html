@@ -2,12 +2,14 @@
   <div class="sidebar-content-wrapper">
     <ul nz-menu nzTheme="light" nzMode="inline" class="menu">
       @for (item of menuItems; track item.iconPath) {
-        <li nz-menu-item class="menu-item">
-          <nz-icon>
-            <svg-icon svgClass="menu-icon" class="menu-item-icon" [src]="item.iconPath | iconPath"></svg-icon>
-          </nz-icon>
-          <span class="menu-item-label">{{item.label}}</span>
-        </li>
+        <a [routerLink]="item.link">
+          <li  nz-menu-item class="menu-item">
+            <nz-icon>
+              <svg-icon svgClass="menu-icon" class="menu-item-icon" [src]="item.iconPath | iconPath"></svg-icon>
+            </nz-icon>
+            <span class="menu-item-label">{{item.label}}</span>
+          </li>
+        </a>
       }
     </ul>
 

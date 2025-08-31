@@ -8,6 +8,7 @@ import {MenuItem} from './models/menu-item.interface';
 import {NzIconDirective} from 'ng-zorro-antd/icon';
 import {User} from '../../models/user.interface';
 import {USER_INFO} from '../../utils/constants/USER_INFO';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,6 +19,7 @@ import {USER_INFO} from '../../utils/constants/USER_INFO';
     SvgIconComponent,
     IconPathPipe,
     NzIconDirective,
+    RouterLink,
   ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'

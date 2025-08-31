@@ -1,0 +1,20 @@
+<div class="hardware-card">
+  <div class="hardware-card-title">{{hardwareInfo().id}}</div>
+  <div class="hardware-card-body">
+    <div class="hardware-info">
+      <svg-icon class="hardware-icon" [src]="'server' | iconPath"></svg-icon>
+      <div class="hardware-info-content">
+        <div class="hardware-name">{{hardwareInfo().name}}</div>
+        <div class="hardware-status">{{hardwareInfo().status}}</div>
+      </div>
+    </div>
+
+    <div class="hardware-divider"></div>
+
+    <div class="hardware-type">{{hardwareInfo().type}}</div>
+  </div>
+
+  @if (hardwareInfo().description) {
+    <div class="hardware-description">{{hardwareInfo().description}}</div>
+  }
+</div>
