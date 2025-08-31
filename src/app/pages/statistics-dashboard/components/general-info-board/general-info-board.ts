@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import {HardwaresGraph} from '../hardwares-graph/hardwares-graph';
+import {HardwaresGraphComponent} from '../hardwares-graph/hardwares-graph';
+
 
 @Component({
   selector: 'app-general-info-board',
   imports: [
-    HardwaresGraph
+    HardwaresGraphComponent
   ],
   templateUrl: './general-info-board.html',
   styleUrl: './general-info-board.scss'

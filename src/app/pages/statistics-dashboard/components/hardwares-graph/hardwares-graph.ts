@@ -1,229 +1,88 @@
-import {Component, ViewChild} from '@angular/core';
-import {NzButtonComponent} from 'ng-zorro-antd/button';
-import {NzRadioComponent, NzRadioGroupComponent} from 'ng-zorro-antd/radio';
-import {FormsModule} from '@angular/forms';
+import { Component, OnInit, signal, ViewChild, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import {
   NzGraphComponent,
   NzGraphData,
-  NzGraphDataDef, NzGraphGroupNodeDirective, NzGraphNodeDirective,
+  NzGraphNodeDirective,
   NzGraphZoomDirective,
   NzRankDirection
 } from 'ng-zorro-antd/graph';
+import { DashboardService } from '../../services/dashboard.service';
+import { first } from 'rxjs';
+import { SvgIconComponent } from 'angular-svg-icon';
+import { IconPathPipe } from '../../../../pipes/icon-path.pipe';
+import {RisksPanel} from '../risks-panel/risks-panel';
+import {serverRisk} from '../../models/server-risk-type';
 
 @Component({
   selector: 'app-hardwares-graph',
   imports: [
-    NzButtonComponent,
-    NzRadioGroupComponent,
     FormsModule,
-    NzRadioComponent,
+    CommonModule,
     NzGraphComponent,
     NzGraphZoomDirective,
     NzGraphNodeDirective,
-    NzGraphGroupNodeDirective
+    SvgIconComponent,
+    IconPathPipe,
+    RisksPanel,
   ],
-  templateUrl: './hardwares-graph.html',
-  styleUrl: './hardwares-graph.scss'
+  templateUrl: 'hardwares-graph.html',
+  styleUrls: ['hardwares-graph.scss'],
+  host: {
+    ngSkipHydration: 'true'
+  }
 })
-export class HardwaresGraph {
-  @ViewChild(NzGraphComponent, { static: true }) nzGraphComponent!: NzGraphComponent;
-  @ViewChild(NzGraphZoomDirective, { static: true }) zoomController!: NzGraphZoomDirective;
-  zoom = 0.5;
-  testDef: any = {
-    nodes: [
-      {
-        id: '0',
-        label: '0'
-      },
-      {
-        id: '1',
-        label: '1'
-      },
-      // {
-      //   id: '2',
-      //   label: '2'
-      // },
-      // // {
-      // //   id: '3',
-      // //   label: '3'
-      // // },
-      // // {
-      // //   id: '4',
-      // //   label: '4'
-      // // },
-      // // {
-      // //   id: '5',
-      // //   label: '5'
-      // // },
-      // // // {
-      // // //   id: '6',
-      // // //   label: '6'
-      // // // },
-      // // // {
-      // // //   id: '7',
-      // // //   label: '7'
-      // // // },
-      // // // {
-      // // //   id: '8',
-      // // //   label: '8'
-      // // // },
-      // // // {
-      // // //   id: '9',
-      // // //   label: '9'
-      // // // },
-      // // // {
-      // // //   id: '10',
-      // // //   label: '10'
-      // // // },
-      // // // {
-      // // //   id: '11',
-      // // //   label: '11'
-      // // // },
-      // // // {
-      // // //   id: '12',
-      // // //   label: '12'
-      // // // },
-      // // // {
-      // // //   id: '13',
-      // // //   label: '13'
-      // // // },
-      // // // {
-      // // //   id: '14',
-      // // //   label: '14'
-      // // // },
-      // // // {
-      // // //   id: '15',
-      // // //   label: '15'
-      // // // }
-    ],
-    edges: [
-      {
-        v: '0',
-        w: '1'
-      },
-      {
-        v: '0',
-        w: '2'
-      },
-      {
-        v: '0',
-        w: '3'
-      },
-      {
-        v: '0',
-        w: '4'
-      },
-      {
-        v: '0',
-        w: '5'
-      },
-      {
-        v: '0',
-        w: '7'
-      },
-      {
-        v: '0',
-        w: '8'
-      },
-      {
-        v: '0',
-        w: '9'
-      },
-      {
-        v: '0',
-        w: '10'
-      },
-      {
-        v: '0',
-        w: '11'
-      },
-      {
-        v: '0',
-        w: '13'
-      },
-      {
-        v: '0',
-        w: '14'
-      },
-      {
-        v: '0',
-        w: '15'
-      },
-      {
-        v: '2',
-        w: '3'
-      },
-      {
-        v: '4',
-        w: '5'
-      },
-      {
-        v: '4',
-        w: '6'
-      },
-      {
-        v: '5',
-        w: '6'
-      },
-      {
-        v: '7',
-        w: '13'
-      },
-      {
-        v: '8',
-        w: '14'
-      },
-      {
-        v: '9',
-        w: '10'
-      },
-      {
-        v: '10',
-        w: '14'
-      },
-      {
-        v: '10',
-        w: '12'
-      },
-      {
-        v: '11',
-        w: '14'
-      },
-      {
-        v: '12',
-        w: '13'
-      }
-    ],
-  };
-  rankDirection: NzRankDirection = 'LR';
-  graphData = new NzGraphData(this.testDef);
+export class HardwaresGraphComponent implements OnInit {
+  @ViewChild(NzGraphComponent, { static: false }) nzGraphComponent!: NzGraphComponent;
+  @ViewChild(NzGraphZoomDirective, { static: false }) zoomController!: NzGraphZoomDirective;
 
-  expand(name: string): void {
-    this.graphData.expand(name);
+  public graphData = signal<NzGraphData | null>(null);
+  public rankDirection: NzRankDirection = 'LR';
+  public isBrowser = signal<boolean>(false);
+
+  constructor(
+    private dashboardService: DashboardService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  ngOnInit(): void {
+    this.isBrowser.set(isPlatformBrowser(this.platformId));
+
+    if (this.isBrowser()) {
+      this.loadGraphData();
+    }
   }
 
-  collapse(name: string): void {
-    this.graphData.collapse(name);
+  public getRiskIconName(risk: serverRisk): string {
+    switch(risk) {
+      case "critical":
+        return "danger-shield";
+      case "ok":
+        return "checked-shield";
+      case "warning":
+        return "warning-shield";
+      default:
+        return "checked-shield";
+    }
   }
 
-  expandAll(): void {
-    this.graphData.expandAll();
-  }
-
-  collapseAll(): void {
-    this.graphData.collapseAll();
-  }
-
-  fit(): void {
-    this.zoomController?.fitCenter();
-  }
-
-  focusNode(e: string | number): void {
-    this.zoomController?.focus(e);
+  private loadGraphData(): void {
+    this.dashboardService.getProcessedGraphData()
+      .pipe(first())
+      .subscribe({
+        next: (data) => {
+          const graphDataObj = new NzGraphData({ nodes: data.nodes, edges: data.edges });
+          this.graphData.set(graphDataObj);
+        },
+        error: (err) => {
+          console.error('Dashboard data loading error:', err);
+        }
+      });
   }
 
   graphInitialized(_ele: NzGraphComponent): void {
-    // Only nz-graph-zoom enabled, you should run `fitCenter` manually
-    this.zoomController?.fitCenter();
+    this.nzGraphComponent.fitCenter();
   }
 }

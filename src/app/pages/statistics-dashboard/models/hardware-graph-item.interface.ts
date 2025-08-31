@@ -6,4 +6,6 @@ export interface HardwareGraphItem {
   serverIp?: string;
   risk?: serverRisk;
   serverType: serverType;
+  id: number;
+  siblingId?: number;
 }

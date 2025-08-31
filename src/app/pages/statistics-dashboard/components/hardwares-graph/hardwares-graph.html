@@ -1,38 +1,39 @@
-<div class="hardwares-graph" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <button nz-button nzType="default" (click)="expandAll()">ExpandAll</button>
-  <button nz-button nzType="default" (click)="collapseAll()">CollapseAll</button>
-  <button nz-button nzType="primary" (click)="fit()">Fit</button>
-  <nz-radio-group [(ngModel)]="rankDirection">
-    <label nz-radio-button nzValue="LR">LR</label>
-    <label nz-radio-button nzValue="RL">RL</label>
-    <label nz-radio-button nzValue="TB">TB</label>
-    <label nz-radio-button nzValue="BT">BT</label>
-  </nz-radio-group>
-  <nz-graph
-    nz-graph-zoom
-    [nzGraphData]="graphData"
-    [nzAutoSize]="true"
-    [nzRankDirection]="rankDirection"
-    (nzGraphInitialized)="graphInitialized($event)"
-  >
-    <ng-container *nzGraphNode="let node">
-      <foreignObject x="0" y="0" [attr.width]="node.width" [attr.height]="node.height">
-        <xhtml:div class="graph-node leaf-node" (click)="focusNode(node.id || node.name)">
-          <div class="title">
-            {{ node.name }}
-          </div>
-        </xhtml:div>
-      </foreignObject>
-    </ng-container>
+@if (isBrowser() && graphData(); as data) {
+  <div class="hardwares-graph" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <nz-graph
+      nz-graph-zoom
+      [nzGraphData]="data"
+      [nzAutoSize]="true"
+      [nzRankDirection]="rankDirection"
+      (nzGraphInitialized)="graphInitialized($event)">
 
-    <ng-container *nzGraphGroupNode="let node">
-      <foreignObject x="0" y="0" [attr.width]="node.width" [attr.height]="node.height">
-        <xhtml:div class="graph-node group-node" (click)="focusNode(node.id || node.name)">
-          <div class="title">
-            {{ node.name }}
-          </div>
-        </xhtml:div>
-      </foreignObject>
-    </ng-container>
-  </nz-graph>
-</div>
+      <ng-container *nzGraphNode="let node">
+        <foreignObject x="0" y="0" [attr.width]="node.width * 1.5" [attr.height]="node.height">
+          <xhtml:div class="graph-node leaf-node">
+            <div class="node-icon">
+              <svg-icon
+                [src]="(node.data?.serverType === 'scalable' ? 'scalable-server' : 'server') | iconPath">
+              </svg-icon>
+              @if (node.data?.risk; as risk) {
+                <svg-icon
+                  class="risk-icon"
+                  [src]="getRiskIconName(risk) | iconPath">
+                </svg-icon>
+              }
+            </div>
+            <div class="graph-node-title">{{ node.data.serverName}}</div>
+            <div class="graph-node-subtitle">{{ node.data.serverIp }}</div>
+          </xhtml:div>
+        </foreignObject>
+      </ng-container>
+    </nz-graph>
+  </div>
+
+  <app-risks-panel></app-risks-panel>
+}
+
+@if (!isBrowser()) {
+  <div class="ssr-placeholder">
+    <div class="loading-message">Loading graph...</div>
+  </div>
+}

@@ -1,0 +1,11 @@
+<div class="risk-list-wrapper">
+  <div class="risks-list">
+    @for (risk of risks; track risk.iconPath) {
+      <div class="risk-item {{risk.riskType}}">
+        <svg-icon class="risk-icon" [src]="risk.iconPath | iconPath"></svg-icon>
+        <div class="risk-title">{{risk.label}}</div>
+      </div>
+    }
+  </div>
+</div>
+
