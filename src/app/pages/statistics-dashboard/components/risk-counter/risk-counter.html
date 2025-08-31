@@ -1,0 +1,47 @@
+<div class="counter">
+  <div class="counter-title">Contextual Risk</div>
+
+  <div class="counter-body">
+    <div class="risks-list">
+      @for (riskItem of riskCounts(); track riskItem.risk) {
+        <div class="risk-item">
+          <div
+            class="risk-dot"
+            [style.background-color]="riskItem.color">
+          </div>
+          <span class="risk-count">{{ riskItem.count }}</span>
+          <span class="risk-label">{{ riskItem.label }}</span>
+        </div>
+      }
+    </div>
+    <div class="risk-circle-container">
+      <div class="main-risk-circle">
+        <!-- Animated circular progress -->
+        <svg class="circle-progress" width="149" height="149">
+          <circle
+            cx="74.5"
+            cy="74.5"
+            r="64.5"
+            fill="none"
+            stroke="#f0f0f0"
+            stroke-width="10"
+            class="circle-background">
+          </circle>
+          <circle
+            cx="74.5"
+            cy="74.5"
+            r="64.5"
+            fill="none"
+            [attr.stroke]="primaryRisk().color"
+            stroke-width="10"
+            stroke-linecap="round"
+            class="circle-fill"
+            [style.stroke-dasharray]="circumference"
+            [style.stroke-dashoffset]="strokeDashoffset()">
+          </circle>
+        </svg>
+        <div class="risk-count-text">{{ primaryRisk().count }}</div>
+      </div>
+    </div>
+  </div>
+</div>

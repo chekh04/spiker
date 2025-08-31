@@ -4,12 +4,14 @@ import { DashboardService } from '../../services/dashboard.service';
 import { HardwareGraphItem } from '../../models/hardware-graph-item.interface';
 import { first } from 'rxjs';
 import {RiskTable} from '../risk-table/risk-table';
+import {RiskCounter} from '../risk-counter/risk-counter';
 
 @Component({
   selector: 'app-general-info-board',
   imports: [
     HardwaresGraphComponent,
-    RiskTable
+    RiskTable,
+    RiskCounter
   ],
   templateUrl: './general-info-board.html',
   styleUrl: './general-info-board.scss'

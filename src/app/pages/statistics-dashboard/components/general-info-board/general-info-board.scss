@@ -23,5 +23,11 @@
 
 .general-info-tables {
   margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+app-risk-table, app-risk-counter {
+  width: 49%;
 }
 

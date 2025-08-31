@@ -1,7 +1,6 @@
 import { Component, input, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzTableComponent } from 'ng-zorro-antd/table';
-import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { SvgIconComponent } from 'angular-svg-icon';
 import { IconPathPipe } from '../../../../pipes/icon-path.pipe';
 import { HardwareGraphItem } from '../../models/hardware-graph-item.interface';
@@ -11,7 +10,6 @@ import { HardwareGraphItem } from '../../models/hardware-graph-item.interface';
   imports: [
     CommonModule,
     NzTableComponent,
-    NzDividerComponent,
     SvgIconComponent,
     IconPathPipe
   ],
