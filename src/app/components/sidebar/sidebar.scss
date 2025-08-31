@@ -34,12 +34,16 @@
 
 .ant-menu.ant-menu-inline-collapsed > .ant-menu-item {
   padding: 0 calc(50% - 16px / 2) !important;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu-item {
   border-radius: 8px;
   height: 42px;
   margin: 0;
+  display: flex;
+  justify-content: center;
   padding-left: 12px !important;
 
   &:hover {
@@ -51,6 +55,19 @@
 
     .menu-item-label {
       color: var(--gray-soft-700);
+    }
+  }
+
+  &.active {
+    background: var(--green-50);
+
+    ::ng-deep .menu-icon {
+      color: black;
+    }
+
+    .menu-item-label {
+      color: black;
+      font-weight: 600;
     }
   }
 }
@@ -67,6 +84,9 @@
   margin-left: 8px;
   color: var(--gray-soft-700);
   font-size: 15px;
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .menu-item-icon {
@@ -135,6 +155,7 @@
     justify-content: center;
     border-radius: 50%;
     line-height: 100%;
+    border: 3px solid var(--gray-soft-50)
   }
 
   .ant-layout-sider-children {
@@ -155,17 +176,7 @@
     color: var(--gray-soft-500);
   }
 
-  .ant-menu-item-selected {
-    background: var(--green-50);
-  }
 
-  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background: var(--green-50);
-  }
-
-  .ant-menu-inline .ant-menu-item-selected::after {
-    border-right: none;
-  }
 
   .ant-menu-item:active {
     background: var(--green-50);
@@ -184,5 +195,8 @@
     display: flex;
   }
 
+  .ant-layout-sider-collapsed .menu-item-label {
+    display: none;
+  }
 }
 

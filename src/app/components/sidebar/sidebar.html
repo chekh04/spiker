@@ -1,9 +1,9 @@
 <nz-sider (nzCollapsedChange)="onCollapseChange($event)" [nzTrigger]="trigger" nzCollapsible nzWidth="250px" class="sidebar">
   <div class="sidebar-content-wrapper">
-    <ul nz-menu nzTheme="light" nzMode="inline" class="menu">
+    <ul nz-menu nzTheme="light" nzMode="inline" nzSelectable="false" class="menu">
       @for (item of menuItems; track item.iconPath) {
-        <a [routerLink]="item.link">
-          <li  nz-menu-item class="menu-item">
+        <a [routerLink]="item.link ?? null">
+          <li nz-menu-item class="menu-item" [class.active]="isActiveRoute(item)" [nzSelected]="false">
             <nz-icon>
               <svg-icon svgClass="menu-icon" class="menu-item-icon" [src]="item.iconPath | iconPath"></svg-icon>
             </nz-icon>
