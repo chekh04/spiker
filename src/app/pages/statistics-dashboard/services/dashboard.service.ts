@@ -3,7 +3,7 @@ import { Observable, of, delay, map } from 'rxjs';
 import { StatisticInfo } from '../models/statistic-info.interface';
 import { DASHBOARD_STATISTIC } from '../../../utils/constants/DASHBOARD_STATISTIC';
 import {HardwareGraphItem} from '../models/hardware-graph-item.interface';
-import {RISKS_GRAPH} from '../../../utils/constants/RISKS_GRAPH';
+import {RISKS_LIST} from '../../../utils/constants/RISKS_LIST';
 import {GraphData} from '../models/graph.interface';
 
 @Injectable({
@@ -16,19 +16,19 @@ export class DashboardService {
     );
   }
 
-  getRisksGraph(): Observable<HardwareGraphItem[]> {
-    return of(RISKS_GRAPH).pipe(
+  getRisksList(): Observable<HardwareGraphItem[]> {
+    return of(RISKS_LIST).pipe(
       delay(800)
     )
   }
 
   getProcessedGraphData(): Observable<GraphData> {
-    return this.getRisksGraph().pipe(
+    return this.getRisksList().pipe(
       map(graphData => this.generateGraph(graphData))
     );
   }
 
-  private generateGraph(graphData: HardwareGraphItem[]): GraphData {
+  public generateGraph(graphData: HardwareGraphItem[]): GraphData {
     const idToIndexMap = new Map<number, number>();
     graphData.forEach((item, index) => {
       idToIndexMap.set(item.id, index);

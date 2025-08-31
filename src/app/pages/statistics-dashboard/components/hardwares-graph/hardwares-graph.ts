@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, ViewChild, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, signal, ViewChild, PLATFORM_ID, Inject, input, computed } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import {
   NzRankDirection
 } from 'ng-zorro-antd/graph';
 import { DashboardService } from '../../services/dashboard.service';
-import { first } from 'rxjs';
+import { HardwareGraphItem } from '../../models/hardware-graph-item.interface';
 import { SvgIconComponent } from 'angular-svg-icon';
 import { IconPathPipe } from '../../../../pipes/icon-path.pipe';
 import {RisksPanel} from '../risks-panel/risks-panel';
@@ -38,7 +38,18 @@ export class HardwaresGraphComponent implements OnInit {
   @ViewChild(NzGraphComponent, { static: false }) nzGraphComponent!: NzGraphComponent;
   @ViewChild(NzGraphZoomDirective, { static: false }) zoomController!: NzGraphZoomDirective;
 
-  public graphData = signal<NzGraphData | null>(null);
+  risksList = input.required<HardwareGraphItem[]>();
+
+  public graphData = computed(() => {
+    const risks = this.risksList();
+    if (risks.length === 0 || !this.isBrowser()) {
+      return null;
+    }
+
+    const processedData = this.dashboardService.generateGraph(risks);
+    return new NzGraphData({ nodes: processedData.nodes, edges: processedData.edges });
+  });
+
   public rankDirection: NzRankDirection = 'LR';
   public isBrowser = signal<boolean>(false);
 
@@ -49,10 +60,6 @@ export class HardwaresGraphComponent implements OnInit {
 
   ngOnInit(): void {
     this.isBrowser.set(isPlatformBrowser(this.platformId));
-
-    if (this.isBrowser()) {
-      this.loadGraphData();
-    }
   }
 
   public getRiskIconName(risk: serverRisk): string {
@@ -66,20 +73,6 @@ export class HardwaresGraphComponent implements OnInit {
       default:
         return "checked-shield";
     }
-  }
-
-  private loadGraphData(): void {
-    this.dashboardService.getProcessedGraphData()
-      .pipe(first())
-      .subscribe({
-        next: (data) => {
-          const graphDataObj = new NzGraphData({ nodes: data.nodes, edges: data.edges });
-          this.graphData.set(graphDataObj);
-        },
-        error: (err) => {
-          console.error('Dashboard data loading error:', err);
-        }
-      });
   }
 
   graphInitialized(_ele: NzGraphComponent): void {

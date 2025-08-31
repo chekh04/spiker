@@ -1,6 +1,6 @@
 import { HardwareGraphItem } from '../../pages/statistics-dashboard/models/hardware-graph-item.interface';
 
-export const RISKS_GRAPH: HardwareGraphItem[] = [
+export const RISKS_LIST: HardwareGraphItem[] = [
   {
     id: 1,
     serverName: 'Node 1',
