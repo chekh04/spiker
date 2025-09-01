@@ -1,5 +1,16 @@
 # Spiker
 
+![img.png](img.png)
+
+## Features
+
+- Sidebar with collapsing logic
+- Info panel that renders data based on mock request
+- General info that renders data based on mock request
+- Graph of servers for visualization, received from mock request
+- Table of server risks with pagination
+- Risks counter with animated circle
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.0.
 
 ## Development server
