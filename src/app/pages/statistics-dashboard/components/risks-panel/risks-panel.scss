@@ -1,0 +1,41 @@
+.risks-list {
+  display: flex;
+  border-top: 1px solid var(--gray-soft-200);
+}
+
+.risk-list-wrapper {
+  padding: 0 16px;
+  background: var(--gray-soft-25);
+}
+
+.risk-item {
+  padding: 6.5px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  &.ok {
+    color: var(--green-700);
+  }
+
+  &.warning {
+    color: var(--orange);
+  }
+
+  &.critical {
+    color: var(--red-700);
+  }
+}
+
+.risk-icon {
+  height: 25px;
+}
+
+.risk-title {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 38px;
+  text-align: center;
+  height: 100%;
+}
+

@@ -1,0 +1,61 @@
+:host {
+  padding: 0 16px;
+  border-radius: 15px;
+}
+
+nz-radio-group {
+  float: right;
+}
+
+button {
+  margin-right: 12px;
+}
+
+nz-graph {
+  height: 230px;
+  padding: 10px 0;
+  background: var(--gray-soft-25);
+}
+
+foreignObject {
+  overflow: visible;
+}
+
+.graph-node {
+  width: fit-content;
+}
+
+.node-icon {
+  position: relative;
+}
+
+.risk-icon {
+  position: absolute;
+  right: 5px;
+  top: -6px;
+}
+
+.graph-node-title {
+  font-weight: 600;
+  line-height: 13.5px;
+  text-transform: capitalize;
+  font-size: 13px;
+  color: var(--gray-soft-700);
+  text-align: center;
+}
+
+.graph-node-subtitle {
+  font-size: 9.45px;
+  color: var(--gray-soft-500);
+  text-align: center;
+}
+
+::ng-deep .nz-graph-edges .nz-graph-edge path {
+  stroke: var(--gray-soft-400);
+  transform: translateX(-10px);
+}
+
+::ng-deep .nz-graph-edge-marker {
+  color: var(--gray-soft-400);
+  fill: var(--gray-soft-400);
+}

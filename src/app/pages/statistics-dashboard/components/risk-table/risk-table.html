@@ -1,0 +1,51 @@
+<div class="risk-table-container">
+  <nz-table [nzFrontPagination]="false">
+    <thead>
+    <tr class="heading">
+      <th class="heading-item hardware-info-heading">Asset</th>
+      <th class="heading-item">Contextual Risk</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (risk of currentPageData(); track risk.id) {
+        <tr class="table-row">
+          <td class="table-item hardware-info">
+            <svg-icon class="hardware-icon"
+                      [src]="(risk.serverType === 'scalable' ? 'scalable-server' : 'server') | iconPath">
+            </svg-icon>
+            <div class="hardware-info-body">
+              <div class="hardware-info-title">{{ risk.serverName }}</div>
+              <div class="hardware-info-subtitle">{{ risk.serverIp }}</div>
+            </div>
+          </td>
+          <td class="table-item">
+            <div class="hardware-risk {{risk.risk ?? 'ok'}}">
+              <div class="risk-text">{{ (risk.risk ?? 'Safe') | titlecase }}</div>
+            </div>
+          </td>
+        </tr>
+            }
+      <tr class="pagination-row">
+        <td colspan="2" class="pagination-cell">
+          <div class="custom-pagination">
+            <button
+              class="pagination-btn prev-btn"
+              [disabled]="!canGoPrevious()"
+              (click)="previousPage()">
+              <svg-icon class="pagination-icon" svgClass="pagination-arrow" [src]="'arrow-left' | iconPath"></svg-icon>
+            </button>
+
+            <span class="pagination-label">{{ paginationLabel() }}</span>
+
+            <button
+              class="pagination-btn next-btn"
+              [disabled]="!canGoNext()"
+              (click)="nextPage()">
+              <svg-icon class="next-arrow pagination-icon" svgClass="pagination-arrow" [src]="'arrow-left' | iconPath"></svg-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

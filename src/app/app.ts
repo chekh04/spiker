@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
-import {SvgIconComponent} from 'angular-svg-icon';
+import {Sidebar} from './components/sidebar/sidebar';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [SvgIconComponent],
+  imports: [Sidebar, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

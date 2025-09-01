@@ -1,0 +1,33 @@
+<nz-sider (nzCollapsedChange)="onCollapseChange($event)" [nzTrigger]="trigger" nzCollapsible nzWidth="250px" class="sidebar">
+  <div class="sidebar-content-wrapper">
+    <ul nz-menu nzTheme="light" nzMode="inline" nzSelectable="false" class="menu">
+      @for (item of menuItems; track item.iconPath) {
+        <a [routerLink]="item.link ?? null">
+          <li nz-menu-item class="menu-item" [class.active]="isActiveRoute(item)" [nzSelected]="false">
+            <nz-icon>
+              <svg-icon svgClass="menu-icon" class="menu-item-icon" [src]="item.iconPath | iconPath"></svg-icon>
+            </nz-icon>
+            <span class="menu-item-label">{{item.label}}</span>
+          </li>
+        </a>
+      }
+    </ul>
+
+    <div class="user-info" [class.collapsed-sidebar]="isSidebarCollapsed()">
+      <img [src]="userInfo.avatar" class="user-logo" alt="user-logo">
+      <div class="user-info-content">
+        <div class="user-info-text">{{userInfo.firstName}}</div>
+        <div class="user-info-text">{{userInfo.lastName}}</div>
+      </div>
+      <svg-icon class="logout-icon" [src]="'logout' | iconPath"></svg-icon>
+    </div>
+  </div>
+
+
+</nz-sider>
+
+<ng-template #trigger>
+  <div class="sidebar-trigger">
+    <svg-icon [src]="'arrow-left' | iconPath"></svg-icon>
+  </div>
+</ng-template>

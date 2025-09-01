@@ -1,0 +1,83 @@
+.hardware-card  {
+  padding: 13px 18px;
+  border-radius: 15px;
+  box-shadow: 0px 1px 2px 0px #0000001A;
+  border: 1px solid var(--gray-soft-25);
+}
+
+.hardware-card-title {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  text-transform: capitalize;
+  color: var(--gray-soft-700);
+}
+
+.hardware-card-body {
+  border-radius: 8px;
+  background-color: var(--gray-soft-25);
+  padding: 6px 16px;
+  display: flex;
+  margin-top: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hardware-info {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  height: 52px;
+}
+
+.hardware-icon {
+  height: 100%;
+}
+
+.hardware-name {
+  color: var(--gray-soft-900);
+  font-weight: 600;
+  font-size: 12.15px;
+  line-height: 13.5px;
+  letter-spacing: 0;
+}
+
+.hardware-status {
+  color: var(--gray-soft-500);
+  font-weight: 500;
+  font-size: 9.45px;
+  line-height: 10.13px;
+  letter-spacing: 0;
+
+}
+
+.hardware-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.7px;
+}
+
+.hardware-divider {
+  width: 1px;
+  height: 44px;
+  background-color: var(--gray-soft-400);
+  margin: 0 8px;
+}
+
+.hardware-description {
+  margin-top: 20px;
+  color: var(--gray-soft-700);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  text-transform: capitalize;
+}
+
+.hardware-type {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 22px;
+  text-transform: capitalize;
+  color: var(--gray-soft-900);
+  height: 44px;
+}
